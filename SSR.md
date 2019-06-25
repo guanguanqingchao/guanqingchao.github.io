@@ -1,7 +1,7 @@
 参考：
-https://juejin.im/post/5c92f499f265da612647b754#heading-9
-https://github.com/alexnm/react-ssr
-https://juejin.im/post/5af443856fb9a07abc29f1eb
+- https://juejin.im/post/5c92f499f265da612647b754#heading-9
+- https://github.com/alexnm/react-ssr
+- https://juejin.im/post/5af443856fb9a07abc29f1eb
 
 ### SSR(服务端渲染) 
 
