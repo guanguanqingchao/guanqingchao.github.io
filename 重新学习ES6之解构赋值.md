@@ -81,33 +81,47 @@
 
 - 函数参数解构赋值
 
-    function add([x, y]){
-      return x + y;
-    }
+          //例一
+          function add([x, y]){
+            return x + y;
+          }
 
-    add([1, 2]); // 3
-    
-    函数add的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量x和y。对于函数内部的代码来说，它们能感受到的参数就是x和y。
-    
-    
-    function move({x = 0, y = 0} = {}) {
-      return [x, y];
-    }
+          add([1, 2]); // 3
 
-    move({x: 3, y: 8}); // [3, 8]
-    move({x: 3}); // [3, 0]
-    move({}); // [0, 0]
-    move(); // [0, 0]
-    
-    
-    总结：
-    // 参数是一组有次序的值
-    function f([x, y, z]) { ... }
-    f([1, 2, 3]);
+          函数add的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量x和y。对于函数内部的代码来说，它们能感受到的参数就是x和y。
 
-    // 参数是一组无次序的值
-    function f({x, y, z}) { ... }
-    f({z: 3, y: 2, x: 1});
+          
+          //例2
+          function move({x = 0, y = 0} = {}) {
+            return [x, y];
+          }
+
+          move({x: 3, y: 8}); // [3, 8]
+          move({x: 3}); // [3, 0]
+          move({}); // [0, 0]
+          move(); // [0, 0]
+          
+          
+          //例3
+            function foo({x, y = 5}) {
+              console.log(x, y);
+            }
+
+            foo({}) // undefined 5
+            foo({x: 1}) // 1 5
+            foo({x: 1, y: 2}) // 1 2
+            foo() // TypeError: Cannot read property 'x' of undefined
+
+
+
+          总结：
+          // 参数是一组有次序的值
+          function f([x, y, z]) { ... }
+          f([1, 2, 3]);
+
+          // 参数是一组无次序的值
+          function f({x, y, z}) { ... }
+          f({z: 3, y: 2, x: 1});
 
       
       
