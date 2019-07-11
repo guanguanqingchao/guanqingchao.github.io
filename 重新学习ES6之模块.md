@@ -1,3 +1,20 @@
+## 浏览器加载模块
+
+  
+    <script type="module" src="./foo.js"></script>
+    <!-- 等同于 -->
+    <script type="module" src="./foo.js" defer></script>
+    
+    浏览器遇到type是module，异步加载，效果等同于defer
+    <script type="module">
+    //顶层的this是undefined
+    </script>
+    
+
+
+
+
+
 ## es6模块和Common模块区别：
 - commonJS是值的拷贝   es6是引用的拷贝
 - commonJS加载整个模块，es6加载其中某个方法
