@@ -50,8 +50,33 @@
     
 ### 继承
 
-    class Point {
-    }
-
     class ColorPoint extends Point {
+      constructor(x, y, color) {
+        super(x, y); // 调用父类的constructor(x, y)
+        this.color = color;
+      }
+
+      toString() {
+        return this.color + ' ' + super.toString(); // 调用父类的toString()
+      }
     }
+    
+    let cp = new ColorPoint(25, 8, 'green');
+    cp instanceof ColorPoint // true
+    cp instanceof Point // true
+    
+    // Object.getPrototypeOf方法可以用来从子类上获取父类。
+    Object.getPrototypeOf(ColorPoint) === Point
+    // true 
+    
+    
+
+    
+    ***** 在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错 *****
+    *** super ***
+    
+    super这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。
+
+    1. super作为函数调用时，代表父类的构造函数。ES6 要求，子类的构造函数必须执行一次super函数。作为函数时，super()只能用在子类的构造函数之中，用在其他地方就会报错。
+    
+    2. super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。
