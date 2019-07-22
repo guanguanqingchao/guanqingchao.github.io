@@ -96,8 +96,46 @@
         trim()
         
 ### 数组
+
+
         pop push
         shift unshift
+        
+        splice          改变原数组  返回删除的元素 删除 替换 添加
+        slice           不改变原数组
+        
+        concact
+        indexOf/lastIndexOf 和 includes
+        find/findIndex  find方法查询的是使函数返回 true 的第一个元素。
+        
+        filter          返回的是所有匹配元素组成的数组
+        map             对数组中每个元素调用函数并返回符合结果的数组
+        reduce
+        
+        
+        sort
+        reverse
+        
+        split
+        join
+        
+        for of 遍历数组
+        arr.length=0 清空数组
+        
+        
+        注意：
+        []+1   '1'
+        [1]+1  '11'
+        [1,3]+1 '1,31'
+        
+        let users = [
+                {id: 1, name: "John"}, 
+                {id: 2, name: "Pete"}, 
+                {id: 3, name: "Mary"}
+        ];
+        let user = users.find(item => item.id == 1);
+        console.log(user.name); // John
+        
         
 ### 类型转换
 
