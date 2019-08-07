@@ -5,6 +5,9 @@
     2. 元素节点 —— HTML 标签，树构建块。
     3. 文本节点 —— 包含文本。
     4. 注释 —— 有时我们可以将内容放入其中，它不会显示，但 JS 可以从 DOM 中 读取它。
+    
+    
+https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/DOM.jpeg
 
 
 ## 表单、控件
