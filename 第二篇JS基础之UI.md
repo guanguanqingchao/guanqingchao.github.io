@@ -1,15 +1,59 @@
 ## DOM
-### 节点
+### 查找节点
     表示整个文档的 document 对象在形式上也是一个 DOM 节点。 有 12 中节点类型  。实际上，我们通常用到的是其中的 4 个:
     1. document —— DOM 中的“入口点”。
     2. 元素节点 —— HTML 标签，树构建块。
     3. 文本节点 —— 包含文本。
     4. 注释 —— 有时我们可以将内容放入其中，它不会显示，但 JS 可以从 DOM 中 读取它。
     
+
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/DOM.jpeg)
+
+    最上面的树节点可以直接通过 document 属性来使用:
     
-https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/DOM.jpeg
-
-
+    <html> = document.documentElement
+    <body> = document.body
+    <head> = document.head
+    
+    firstChild 和 lastChild 属性是访问第一个和最后一个子元素的快捷方式
+    hasChildNodes()用于检测节点是否有子节点 
+    父节点可以通过 parentNode 访问
+    nextSibling previousSibling访问兄弟节点
+    childNodes 集合提供了对所有子节点包括其中文本节点的访问。不是数组，集合可迭代， for...of循环，Array.from()转成真正数组
+    
+    修改自己节点不能通过childNodes[i]=...   只读，实时状态
+    
+    
+    
+    children —— 只获取类型为元素节点的子节点。
+    firstElementChild ， lastElementChild —— 第一个和最后一个子元素。
+    previousElementSibling ， nextElementSibling —— 兄弟元素。 parentElement —— 父元素。
+    
+    
+    table元素支持 (除了上面给出的之外) 以下这些属性: 
+    table.rows — 用于表示表中 <tr> 元素的集合。
+    用于访问元素 <caption> 、 table.tBodies — <tbody> 元素的集合(根据标准该元素数量可以很多)。
+    <thead> 、 <tfoot> 、 <tbody> 元素提供了 rows 属性:
+    tbody.rows — 表内部 <tr> 元素的集合。 <tr> :
+    tr.cells — 在给定 <tr> 元素下 <td> 和 <th> 单元格的集合。 tr.sectionRowIndex — 在封闭的 <thead>/<tbody> 中 <tr> 的编号。 tr.rowIndex — 在表中 <tr> 元素的编号。
+    <td> 和 <th> :
+    td.cellIndex — 在封闭的 <tr> 中单元格的编号。
+    
+    
+    elem.querySelectorAll(css) 的调用将返回与给定 CSS 选择器匹配 elem 中的所有元素
+    elem.querySelector(css) 第一个元素
+    let elements = document.querySelectorAll('ul > li:last-child');
+    
+    elem.closest(css) 方法会查找与 CSS 选择器匹配的最接近的祖先。 elem 自 己也会被搜索。
+    elemA.contains(elemB)
+    
+    
+### 节点属性：type、tag、 contents
+    
+    
+    
+    
+    
 ## 表单、控件
 
 ### 常见的表单以及表单属性
