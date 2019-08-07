@@ -119,8 +119,10 @@
     parentElem.appendChild(node) 将 node 作为 parentElem 最后一个子元素。
     parentElem.insertBefore(node, nextSibling) 在 parentElem 的 nextSibling 前面插入 node 。
     parentElem.replaceChild(node, oldChild) 将 parentElem 的 oldChild 替换为 node 。
+    parent.removeChild(node)
     
-    在开头插入/在末尾插入/在前面插入/在后面插入 
+    
+    在开头插入/在末尾插入/在前面插入/在后面插入   node节点
     This set of methods provides more flexible insertions:
     
     node.append(...nodes or strings) —— 在 node 最后一个孩子节点 后面插入节点或者字符串，
@@ -128,8 +130,10 @@
     node.before(...nodes or strings) —— 在 node 前面插入节点或者字符串，
     node.after(...nodes or strings) —— 在 node 后面插入节点或者字符串，
     node.replaceWith(...nodes or strings) —— 将 node 替换为节点或者字符串。
+    node.remove() —— 移除 node 。
     
-    在相邻的 HTML 标签中插入/文本/元素  elem.insertAdjacentHTML(where,html)
+    在相邻的 HTML 标签中插入/文本/元素  
+    elem.insertAdjacentHTML(where,html)  Html标签
    
     beforebegin
     afterbegin 
@@ -141,6 +145,9 @@
     
 ![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/option.jpeg)
     
+    
+     elem.cloneNode(true) 深克隆 false只克隆本身
+
     
 ## 表单、控件
 
