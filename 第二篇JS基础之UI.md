@@ -51,8 +51,35 @@
 ### 节点属性：type、tag、 contents
     
     
+  ![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/event.jpeg)
+    
+    elem.constructor.name  查看DOM节点类型
+    
+#### “nodeType” 属性
+
+    nodeType 属性提供了一个获取 DOM 节点类型的旧方法。
+    它有一个数值:
+    elem.nodeType == 1 是元素节点， 
+    elem.nodeType == 3 是文本节点， 
+    elem.nodeType == 9 是 document 对象，
+    
+#### 标签属性:nodeName 和 tagName
+
+    tagName属性仅用于Element节点。 
+    nodeName 是为任意 Node 定义的:
+        对于元素，它的意义与 tagName 相同。 
+        对其他节点类型(text、comment 等)，则是拥有一个字符串的节点类型
+    elem.innerHTML+="something" 可以添加更多content，完全重写  仅元素节点
+    outerHTML包含本身
+    
+    nodeValue/data:文本节点内容
+    
+    textContent:纯文本，去掉所有tag
+    
+    hidden elem.hidden = true; 隐藏元素     elem.hidden = !elem.hidden
     
     
+
     
 ## 表单、控件
 
