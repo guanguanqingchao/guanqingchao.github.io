@@ -77,9 +77,70 @@
     textContent:纯文本，去掉所有tag
     
     hidden elem.hidden = true; 隐藏元素     elem.hidden = !elem.hidden
-    
-    
+ 
+#### 特性和属性 Attribute 译为“特性”，Property 译为“属性”
 
+    特性 —— 写在 HTML 中。 
+    属性 —— 是一个 DOM 对象。
+    
+    DOM属性
+    HTML标签可能拥有特性，当浏览器读取 HTML 文本并根据标签生成DOM 对象，它会辨别标准化特性然后以此创建 DOM 属性。
+    标准化特性：body的id   input的type
+    
+    如果一个特性不是标准化的，DOM 属性就不存在这个特性
+    读取非标准化特性：
+    elem.hasAttribute(name) —— 检验是否拥这个特性。 
+    elem.getAttribute(name) —— 获取到这个特性值。 
+    elem.setAttribute(name, value) —— 设置这个特性值。 
+    elem.removeAttribute(name) —— 移除这个特性。
+
+#### 非标准化的特性，dataset
+
+    <div show-info="name"></div>
+    <div show-info="age"></div>
+
+ 
+        let user = {
+            name: "Pete",
+            age: 25
+        };
+        for (let div of document.querySelectorAll('[show-info]')) { // 找到特性
+            let field = div.getAttribute('show-info');
+            div.innerHTML = user[field]; // Pete，然后是年龄
+        }
+        
+    所有以 “data-” 开头的特性值可以给编程人员正常使用，同时它还是 dataset 合法值。
+    如果一个 elem  有一个键名是 "data-about" 的特性，那么可以通过 elem.dataset.about 取到这个合法值。
+### 修改文档内容
+    
+    document.createElement(tag) 用给定的标签创建一个新元素:
+    document.createTextNode(text) 用给定的文本创建一个文本节点
+    
+    parentElem.appendChild(node) 将 node 作为 parentElem 最后一个子元素。
+    parentElem.insertBefore(node, nextSibling) 在 parentElem 的 nextSibling 前面插入 node 。
+    parentElem.replaceChild(node, oldChild) 将 parentElem 的 oldChild 替换为 node 。
+    
+    在开头插入/在末尾插入/在前面插入/在后面插入 
+    This set of methods provides more flexible insertions:
+    
+    node.append(...nodes or strings) —— 在 node 最后一个孩子节点 后面插入节点或者字符串，
+    node.prepend(...nodes or strings) —— 在 node 第一个孩子节点 前面插入节点或者字符串，
+    node.before(...nodes or strings) —— 在 node 前面插入节点或者字符串，
+    node.after(...nodes or strings) —— 在 node 后面插入节点或者字符串，
+    node.replaceWith(...nodes or strings) —— 将 node 替换为节点或者字符串。
+    
+    在相邻的 HTML 标签中插入/文本/元素  elem.insertAdjacentHTML(where,html)
+   
+    beforebegin
+    afterbegin 
+    beforeend 
+    afterend
+    
+    div.insertAdjacentHTML('beforebegin', '<p>Hello</p>');
+    div.insertAdjacentHTML('afterend', '<p>Bye</p>');
+    
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/option.jpeg)
+    
     
 ## 表单、控件
 
