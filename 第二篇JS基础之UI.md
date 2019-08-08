@@ -148,6 +148,10 @@
     
      elem.cloneNode(true) 深克隆 false只克隆本身
 
+#### 练习
+
+    https://plnkr.co/edit/RzDsKC5VqX7w6khH5Fxa?p=preview
+    https://plnkr.co/edit/nYRyp8959wqIOBge8TnJ?p=preview
     
 ## 表单、控件
 
