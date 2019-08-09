@@ -31,13 +31,20 @@
     
     
     table元素支持 (除了上面给出的之外) 以下这些属性: 
-    table.rows — 用于表示表中 <tr> 元素的集合。
-    用于访问元素 <caption> 、 table.tBodies — <tbody> 元素的集合(根据标准该元素数量可以很多)。
+        table.rows — 用于表示表中 <tr> 元素的集合。
+        table.caption/tHead/tFoot用于访问元素 <caption> 、 <tfoot> 、 <tbody>
+        table.tBodies — <tbody> 元素的集合(根据标准该元素数量可以很多)。
+     
     <thead> 、 <tfoot> 、 <tbody> 元素提供了 rows 属性:
-    tbody.rows — 表内部 <tr> 元素的集合。 <tr> :
-    tr.cells — 在给定 <tr> 元素下 <td> 和 <th> 单元格的集合。 tr.sectionRowIndex — 在封闭的 <thead>/<tbody> 中 <tr> 的编号。 tr.rowIndex — 在表中 <tr> 元素的编号。
+        tbody.rows — 表内部 <tr> 元素的集合。
+     
+    <tr> :
+        tr.cells — 在给定 <tr> 元素下 <td> 和 <th> 单元格的集合。 
+        tr.sectionRowIndex — 在封闭的 <thead>/<tbody> 中 <tr> 的编号。 
+        tr.rowIndex — 在表中 <tr> 元素的编号。
+        
     <td> 和 <th> :
-    td.cellIndex — 在封闭的 <tr> 中单元格的编号。
+        td.cellIndex — 在封闭的 <tr> 中单元格的编号。
     
     
     elem.querySelectorAll(css) 的调用将返回与给定 CSS 选择器匹配 elem 中的所有元素
@@ -147,11 +154,38 @@
     
     
      elem.cloneNode(true) 深克隆 false只克隆本身
+     
+### 样式和类
+ 
+    elem.className  获取元素的class，动态设置class
+    elem.classList 是一个特殊对象，它拥有 add/remove/toggle 的类方法。
+        elem.classList.add/remove("class") —— 添加/移除类。
+        elem.classList.toggle("class") —— 如果类存在就移除，否则添加。
+        elem.classList.contains("class") —— 返回 true/false ，检查给 定类。
+        可迭代  for of
+    elem.style.backgroundColor     获取元素的内联style的样式，无法获取class
+    elem.style.marginTop = "20px"  带单位
+     // we can set special style flags like "important" here  可以设置多个样式属性
+    table.style.cssText = `
+        color: red !important;
+        background-color: yellow; 
+        width: 100px; 
+        text-align: center;
+    `;
+     table.setAttribute('style', 'font-size:50px;color:yellow')
+     
+     获取样式 getComputedStyle(elem)
+### 尺寸与滚动
+
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/client.jpeg)
+
+    
 
 #### 练习
 
     https://plnkr.co/edit/RzDsKC5VqX7w6khH5Fxa?p=preview
     https://plnkr.co/edit/nYRyp8959wqIOBge8TnJ?p=preview
+    https://plnkr.co/edit/xJmpkNCoe9MGDLAmPG9R?p=preview
     
 ## 表单、控件
 
