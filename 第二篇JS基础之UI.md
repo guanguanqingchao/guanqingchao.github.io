@@ -177,7 +177,33 @@
      获取样式 getComputedStyle(elem)
 ### 尺寸与滚动
 
-![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/client.jpeg)
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/scroll.jpeg)
+
+
+    几何属性仅为显示出来的元素计算。
+    如果元素(或其任何祖先)在文档中显示为 display:none 或本身不在文档中，则所有几何属性都是 0 或者值为 null  
+    
+    offsetParent, offsetLeft/Top 
+        offsetParent 是最近的祖先元素:
+            1. CSS 定位( position 为 absolute 、 relative 或 fixed )， 
+            2. 或者 <td> 、 <th> 、 <table> ，
+            3. 或者 <body> 。
+            
+        offsetLeft/offsetTop 提供相对于元素左上角的 x/y 坐标
+        
+    offsetWidth/Height 元素的“外部”宽度/高度。换句话说，它的完整大小包括边框border。
+    clientTop/Left 元素内部边框，有滚动条的时候，border+滚动条的宽度
+    clientWidth/Height 元素边框内区域的大小 不包含滚动条宽度 content+padding
+    scrollWidth/Height clientWidth/Height+包括滚动(隐藏)部分
+    scrollLeft/scrollTop 元素隐藏、滚动部分的宽度/高度。可改变。将 scrollTop 设置为 0 或 Infinity 将使元素分别滚动到顶部/底部。
+    
+     如果元素滚动到底，下面等式返回true，没有则返回false.
+     element.scrollHeight - element.scrollTop === element.clientHeight
+     其他参考：https://github.com/iuap-design/blog/issues/38
+    
+    
+    
+    
 
     
 
