@@ -51,7 +51,7 @@
     elem.querySelector(css) 第一个元素
     let elements = document.querySelectorAll('ul > li:last-child');
     
-    elem.closest(css) 方法会查找与 CSS 选择器匹配的最接近的祖先。 elem 自 己也会被搜索。
+    elem.closest(css) 方法会查找与 CSS 选择器匹配的最接近的祖先。 elem 自己也会被搜索。
     elemA.contains(elemB)
     
     
@@ -201,8 +201,43 @@
      element.scrollHeight - element.scrollTop === element.clientHeight
      其他参考：https://github.com/iuap-design/blog/issues/38
     
-    
-    
+ ### Window 的尺寸和滚动
+ 
+    文档可视范围的宽度高度 document.documentElement.clientWidth/clientHeight
+         window.innerWidth; // 整个窗口的宽度
+         document.documentElement.clientWidth; // 窗口减去滚动条的宽度  实际的窗口宽度
+         
+    整个文档的宽度高度，包括滚动区域外的部分
+    let scrollHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight,            document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight
+        );
+        
+    读取：当前窗口滚动 window.pageXOffset/pageYOffset 只读
+    改变：当前窗口滚动 
+        window.scrollBy(x,y)滚动页面至相对于现在位置的 (x, y) 位置 【相对当前位置定位】 
+        window.scrollTo(pageX,pageY) 滚动页面至相对于文档的左上角的(x,y)位置，【绝对定位】就好像设置scrollLeft/scrollTop。
+                        回到顶部, 我们可以用 scrollTo(0,0) 。
+        elem.scrollIntoView(top) 滚动到正好elem可视的位置(elem与窗口的顶部/底部对齐)
+                        如果 top=true (默认值)，页面滚动使 elem 会出现到窗口顶部。元素的上边 缘与窗口顶部对齐。
+                        如果 top=false ，则页面滚动使 elem 会出现在窗口底部。元素的下边缘与窗 口底部对齐。
+        
+ ### 坐标
+ 
+     窗口坐标：窗口的坐标是从窗口的左上角开始计算的，不会考虑文档滚动，基于窗口计算
+
+             对应position:fixed
+             elem.getBoundingClientRect()返回窗口坐标对象 
+             窗口坐标用 clientY和clientX表示
+     
+     
+     
+     文档坐标：从文档的左上角开始计算，而不是窗口
+             
+             对应position:absolute
+             页面没有滚动：窗口坐标和文档坐标一致
+             页面有滚动：
+                 pageY = clientY + 文档垂直部分滚动的高度。 
+                 pageX = clientX + 文档水平部分滚动的宽度。
     
 
     
@@ -213,6 +248,70 @@
     https://plnkr.co/edit/nYRyp8959wqIOBge8TnJ?p=preview
     https://plnkr.co/edit/xJmpkNCoe9MGDLAmPG9R?p=preview
     
+## 事件
+
+### 事件类型
+- HTML事件 <input value="Click me" onclick="alert('Click!')" type="button">  大小写不敏感
+- DOM2  elem.onclick = function(){} 不能添加多个事件处理器,覆盖 大小写敏感
+- DOM3  elem.addEventListner('click',handler,false) false冒泡 true捕获
+### 事件对象
+- event.type 事件类型 'click'等
+- event.currentTarget 与this相同，处理事件的元素，冒泡到的元素
+- event.target 实际被点击的元素
+- event.clientX / event.clientY 鼠标事件中光标相对于窗口的坐标。
+### 冒泡和捕获
+
+    DOM 事件标准描述了事件传播的 3 个阶段:
+        1. 捕获阶段 —— 事件(从 Window)向下到达元素上。 
+        2. 目标阶段 —— 事件到达目标元素。
+        3. 冒泡阶段 —— 事件从元素上开始冒泡。
+        
+    禁止冒泡： event.stopPropagation() 
+    
+### 事件委托
+
+ 如果我们有许多元素是以类似的方式处理的，那么我们就不需要给每个元素分配一个处理器 —— 而是在它们共同的祖先上面添加一个处理器
+ 事件必须冒泡
+ event.target 可以得到实际在哪里点击的
+ 事件委托一般分为两步：
+    1. 我们向元素添加一个特殊属性。
+    2. 用文档范围级的处理器追踪事件，如果事件发生在具有特定属性的元素上 —— 则 执行该操作。
+    
+    <button data-toggle-id="subscribe-mail"
+        Show the subscription form
+    </button>
+    <form id="subscribe-mail" hidden> 
+        Your mail: <input type="email">
+    </form> 
+    
+    document.addEventListener('click', function(event) { 
+        let id = event.target.dataset.toggleId;
+        if (!id) return;
+        let elem = document.getElementById(id);
+        elem.hidden = !elem.hidden; 
+        }
+     );
+     
+     Counter: <input type="button" value="1" data-counter>
+     One more counter: <input type="button" value="2" data-counter>
+
+        document.addEventListener('click', function(event) {
+        if (event.target.dataset.counter != undefined) { // if the attribute exists... 
+            event.target.value++;
+        }
+        }); 
+     
+
+    
+    
+
+
+
+
+#### 练习
+菜单切换显示隐藏 https://plnkr.co/edit/dJVvZgfE5M0t2JcpVs2X?p=preview
+关闭按钮 https://plnkr.co/edit/L2538XJlIzpIcVlqoezg?p=preview
+简易Carousel https://plnkr.co/edit/KIDLTiyDj4EZZtLSW05Q?p=preview
 ## 表单、控件
 
 ### 常见的表单以及表单属性
