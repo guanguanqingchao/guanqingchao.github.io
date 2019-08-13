@@ -139,6 +139,8 @@
     node.replaceWith(...nodes or strings) —— 将 node 替换为节点或者字符串。
     node.remove() —— 移除 node 。
     
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/nodeinsert.jpeg)
+    
     在相邻的 HTML 标签中插入/文本/元素  
     elem.insertAdjacentHTML(where,html)  Html标签
    
@@ -312,6 +314,7 @@
 菜单切换显示隐藏 https://plnkr.co/edit/dJVvZgfE5M0t2JcpVs2X?p=preview
 关闭按钮 https://plnkr.co/edit/L2538XJlIzpIcVlqoezg?p=preview
 简易Carousel https://plnkr.co/edit/KIDLTiyDj4EZZtLSW05Q?p=preview
+树形切换显示  https://plnkr.co/edit/qOUQDcMX3XBKIUoMshR2?p=preview
 ## 表单、控件
 
 ### 常见的表单以及表单属性
