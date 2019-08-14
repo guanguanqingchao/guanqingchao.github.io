@@ -303,9 +303,46 @@
         }
         }); 
      
+### 阻止浏览器默认行为
 
+- 主流的方法是使用 event 对象，event.preventDefault() 方法。 
+- 如果是on<event> (而不是 addEventListener )，内部返回false。
+- 如果默认动作被阻止，那么 event.defaultPrevented 属性为 true ，否则为 false 。    
+- event.stopPropagation() 阻止冒泡。
     
-    
+#### 鼠标事件 
+- mousedown/mouseup  mouseover/mouseout mousemove click contextmenu dbclick
+- 按钮: which 。
+- 修饰符键(true 如果被按压):altKey、ctrlKey、shiftKey 和 metaKey(Cmd for Mac)
+- mac Ctrl -- Cmd  if (e.metaKey || e.ctrlKey)
+- 窗口相对坐标: clientX/clientY 。
+- 文档相对坐标: pageX/pageY 。
+- 处理文本选择虽然也是不必要的点击副作用，但是却很重要。
+
+1. CSS 属性 user-select:none (带有浏览器前缀)完全禁用文本选择。 
+2. 使用 getSelection().removeAllRanges() 取消选择后的内容。
+3. 处理 mousedown 并阻止默认操作(通常是最好的选择)。
+ 
+#### 移动 mouseover/out，mouseenter/leave
+    mouseenter/mouseleave 事件类似于 mouseover/mouseout 。
+    当鼠标指针 移入/移出元素时，它们也会被触发。
+        但有两个不同之处:
+        1. 元素内部的转换不会有影响。
+        2. mouseenter/mouseleave 事件不会冒泡，不能用事件委托
+    当指针进入一个元素时,mounseenter被触发，只有当鼠标光标离开该元素时， mouselease  事件才会被触发。
+    对比：
+    https://plnkr.co/edit/2raUPK431ZloT6NeKAs9?p=preview
+    https://plnkr.co/edit/IYczIahk3AjaZWez0uFy?p=preview
+
+
+
+#### 拖拽鼠标事件
+
+拖放基础算法就像这样:
+1. 在可拖动元素上捕获 mousedown 事件。
+2. 准备要移动的元素(可能创建它的副本或其他任何东西)。
+3. 然后在 mousemove 上，通过改变 left/top 和 position:absolute 来移 动它。
+4. 在 mouseup (释放按钮)中 —— 执行所有完成拖放相关的动作。
 
 
 
@@ -315,6 +352,9 @@
 关闭按钮 https://plnkr.co/edit/L2538XJlIzpIcVlqoezg?p=preview
 简易Carousel https://plnkr.co/edit/KIDLTiyDj4EZZtLSW05Q?p=preview
 树形切换显示  https://plnkr.co/edit/qOUQDcMX3XBKIUoMshR2?p=preview
+表格排序 https://plnkr.co/edit/i7dpfnxdFab8O0tKpjb7?p=preview
+smart工具鼠标快速移入  https://plnkr.co/edit/tujUJ948BWxxYV8sgsqe?p=preview
+
 ## 表单、控件
 
 ### 常见的表单以及表单属性
