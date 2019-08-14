@@ -343,6 +343,11 @@
 2. 准备要移动的元素(可能创建它的副本或其他任何东西)。
 3. 然后在 mousemove 上，通过改变 left/top 和 position:absolute 来移 动它。
 4. 在 mouseup (释放按钮)中 —— 执行所有完成拖放相关的动作。
+- document.elementFromPoint(clientX, clientY)的方法。 它会根据给定的窗口相对坐标，返回该处嵌套最深的元素(如果坐标在窗口之外，则返回null)
+
+示例：
+足球进门：https://plnkr.co/edit/Syne7OJZ3YDGx0KMug2N?p=preview
+滚动条： https://plnkr.co/edit/tz4W7j4Cea2OQEKX2Tei?p=preview
 
 
 
@@ -354,6 +359,7 @@
 树形切换显示  https://plnkr.co/edit/qOUQDcMX3XBKIUoMshR2?p=preview
 表格排序 https://plnkr.co/edit/i7dpfnxdFab8O0tKpjb7?p=preview
 smart工具鼠标快速移入  https://plnkr.co/edit/tujUJ948BWxxYV8sgsqe?p=preview
+足球射门：https://plnkr.co/edit/d3a0LZFTMqS2KRaEEl7J?p=preview
 
 ## 表单、控件
 
