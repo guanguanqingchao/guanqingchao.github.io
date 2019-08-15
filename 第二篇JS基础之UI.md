@@ -402,6 +402,31 @@ HTML 页面的生命周期有三个重要事件:
 
 **DOMContentLoaded**
 
+     document.addEventListener("DOMContentLoaded", ready);
+     
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/defer1.jpeg)     
+
+**window.onload**
+样式、图像和其他资源的页面被全部加载时，load 事件就会在 window 对 象上被触发
+
+**window.onunload window.onbeforeunload**
+
+document.readyState 属性为我们提供了一些信息:
+"loading" —— 文档正在被加载。
+"interactive" —— 文档被全部读取。
+"complete" —— 文档被全部读取，所有的资源(图像之类的)都被加载。
+     
+#### 资源加载 onload 和 onerror
+跟踪外部资源的加载， 脚本、iframes、图像等。
+onload —— 成功加载， 
+onerror —— 发生异常。
+
+    let script = document.createElement('script');
+    // 可以从任意域名加载脚本
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js" document.head.append(script);
+    script.onload = function() { // 脚本创建了一个辅助函数 "_" alert(_); // 函数可用
+    };
+
 
 #### 练习
 菜单切换显示隐藏 https://plnkr.co/edit/dJVvZgfE5M0t2JcpVs2X?p=preview
