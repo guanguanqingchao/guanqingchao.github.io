@@ -232,7 +232,8 @@
              窗口坐标用 clientY和clientX表示
      
      
-     
+![image](https://github.com/guanguanqingchao/guanqingchao.github.io/blob/master/bound.jpeg)
+
      文档坐标：从文档的左上角开始计算，而不是窗口
              
              对应position:absolute
@@ -355,13 +356,16 @@
 主键盘事件属性:
 - code —— “按键代码”( "KeyA" 、 "ArrowLeft" 等)，具体到键盘上键的物 理位置。
 - key —— 非字符键的字符( "A" 、 "a" 等)，通常具有和 code 一样的值。
+
 #### 滚动事件
 - scroll 事件在 window 和可滚动元素上都可以运行。
+- window有pageYOffset scrollY 属性
 阻止滚动：
  1.在导致滚动的事件上使用 event.preventDefault() 来阻止滚动。如wheel 事件、pageUp 和 pageDown的 keydown 事件
  2.使用 CSS overflow 属性。
  
-     滚动加载更多
+     
+示例1：滚动加载更多
      
      function populate() {
         while(true) {
@@ -376,6 +380,27 @@
       window.addEventListener('scroll', populate);
 
       populate(); // init document
+      
+示例2：滚动页面显示回到顶部
+
+        arrowTop.onclick = function () {
+            window.scrollTo(pageXOffset, 0);
+            // after scrollTo, there will be a "scroll" event, so the arrow will hide automatically
+        };
+
+        window.addEventListener('scroll', function () {
+            arrowTop.hidden = (pageYOffset < document.documentElement.clientHeight);
+        });
+        
+示例3： 图片懒加载 按需加载 https://plnkr.co/edit/JqoPW7DfKA7sbjZBcpQX?p=preview
+
+#### 页面生命周期 DOMContentLoaded、load、beforeunload 和 unload
+HTML 页面的生命周期有三个重要事件:
+- DOMContentLoaded  浏览器加载 HTML，并构建 DOM 树，但像 <img> 和样式这样的资源可能还没有加载。可以查找 DOM 节点，并初始化接口。
+- load 浏览器加载所有资源(图像，样式等)。 可以获取图像大小
+- beforeunload/unload  当用户离开页面时。可以检查用户是否保存了修改，并在询问他是否真的要离开。
+
+**DOMContentLoaded**
 
 
 #### 练习
