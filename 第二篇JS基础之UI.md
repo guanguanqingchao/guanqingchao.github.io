@@ -349,7 +349,33 @@
 足球进门：https://plnkr.co/edit/Syne7OJZ3YDGx0KMug2N?p=preview
 滚动条： https://plnkr.co/edit/tz4W7j4Cea2OQEKX2Tei?p=preview
 
+#### 键盘事件
+- keydown —— 长久按键(如果按下长键则自动重复)
+- keyup —— 释放按键时。
+主键盘事件属性:
+- code —— “按键代码”( "KeyA" 、 "ArrowLeft" 等)，具体到键盘上键的物 理位置。
+- key —— 非字符键的字符( "A" 、 "a" 等)，通常具有和 code 一样的值。
+#### 滚动事件
+- scroll 事件在 window 和可滚动元素上都可以运行。
+阻止滚动：
+ 1.在导致滚动的事件上使用 event.preventDefault() 来阻止滚动。如wheel 事件、pageUp 和 pageDown的 keydown 事件
+ 2.使用 CSS overflow 属性。
+ 
+     滚动加载更多
+     
+     function populate() {
+        while(true) {
+          let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+          
+          if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
+          
+          document.body.insertAdjacentHTML("beforeend", `<p>Date: ${new Date()}</p>`);
+        }
+      }
 
+      window.addEventListener('scroll', populate);
+
+      populate(); // init document
 
 
 #### 练习
