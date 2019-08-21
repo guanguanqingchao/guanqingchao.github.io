@@ -87,3 +87,226 @@ promise优点：
 
     let promise = new Promise(resolve => resolve(value));
 当我们已经有一个 value 的时候，就会使用该方法，但希望将它“封装”进 promise。
+
+#### Promise.reject
+
+    let promise = Promise.reject(error);
+创建一个带有 error 的 rejected promise。
+等价于：
+
+    let promise = new Promise((resolve, reject) => reject(error));
+    
+#### Promise.all
+假设我想要并行执行多个 promise，并等待所有 promise 准备就绪。
+
+语法：
+
+    let promise = Promise.all([...promises...]);
+    
+    
+返回的结果是按照顺序的promise的结果数组。
+如果任意一个 promise 为 reject，Promise.all 返回的 promise 就会立即 reject 这个错误。
+其他结果会被忽略
+
+    let names = ['iliakan', 'remy', 'jeresig'];
+
+    let requests = names.map(name => fetch(`https://api.github.com/users/${name}`));
+
+    Promise.all(requests)
+      .then(responses => {
+        // 所有响应都就绪时，我们可以显示 HTTP 状态码
+        for(let response of responses) {
+          alert(`${response.url}: ${response.status}`); // 每个 url 都显示 200
+        }
+
+        return responses;
+      })
+      // 映射 response 数组到 response.json() 中以读取它们的内容
+      .then(responses => Promise.all(responses.map(r => r.json())))
+      // 所有 JSON 结果都被解析：“users” 是它们的数组
+      .then(users => users.forEach(user => alert(user.name)));
+      
+#### Promise.allSettled
+Promise.allSettled 等待所有的 promise 都被处理：即使其中一个 reject，它仍然会等待其他的 promise。
+处理完成后的数组有：
+
+    {status:"fulfilled", value:result} 对于成功的响应，
+    {status:"rejected", reason:error} 对于错误的响应
+    
+         let urls = [
+            'https://api.github.com/users/iliakan',
+            'https://api.github.com/users/remy',
+            'https://no-such-url'
+        ];
+        if (!Promise.allSettled) {
+            Promise.allSettled = function (promises) {
+                return Promise.all(promises.map(p => Promise.resolve(p).then(v => ({
+                    state: 'fulfilled',
+                    value: v,
+                }), r => ({
+                    state: 'rejected',
+                    reason: r,
+                }))));
+            };
+        }
+        
+        Promise.allSettled(urls.map(url => fetch(url)))
+            .then(results => {                          // (*)
+                results.forEach((result, num) => {
+                    if (result.status == "fulfilled") {
+                        console.log(`${urls[num]}: ${result.value.status}`);
+                    }
+                    if (result.status == "rejected") {
+                        console.log(`${urls[num]}: ${result.reason}`);
+                    }
+                });
+            });
+            
+#### Promise.race
+与 Promise.all 类似，它接受一个可迭代的 promise 集合，但是它只等待第一个完成（或者 error）而不会等待所有都完成，然后继续执行。
+### Promisification
+
+Promisify，就是回调函数与 Promise 间的桥梁，将一个不是promise的方法变成 promise
+普通回调：
+
+        function loadScript(src, callback) {
+                    let script = document.createElement('script');
+                    script.src = src;
+
+                    script.onload = () => callback(null, script);
+                    script.onerror = () => callback(new Error(`Script load error for ${src}`));
+
+                    document.head.append(script);
+                }
+                
+                loadScript('path/script.js', (err, script) => {
+                    console.log(err, script)     // Error: Script load error for path/script.js
+                })
+
+                loadScript('http://omega.intra.didiglobal.com/ba/point/detail?pointId=1000285&taskId=15777', (err, script) => {
+                    console.log(err, script)  // null  
+                })
+
+可以看出：
+- 回调函数在主参数loadScript中的位置是最后一个
+- 回调函数的第一个参数必须是error
+
+
+       function promisify(f) {
+            return function (...args) { // 返回一个包装函数
+                return new Promise((resolve, reject) => {
+                    function callback(err, result) { // 给 f 用的自定义回调
+                        if (err) {
+                            return reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+
+                    args.push(callback); // 在参数的最后附上我们自定义的回调函数
+               
+
+                    f.call(this, ...args); // 调用原来的函数
+                });
+            };
+        };
+
+        // 用法：
+        let loadScriptPromise = promisify(loadScript);
+        loadScriptPromise('http://omega.intra.didiglobal.com/ba/point/detail?pointId=1000285&taskId=15777')
+        .then((
+            data) => console.log(data)
+            );
+        
+如果原来的 f 接受一个带更多参数的回调 callback(err, res1, res2)，该怎么办？
+
+下面是 promisify 的修改版，它返回一个装有多个回调结果的数组：
+
+    // 设定为 promisify(f, true) 来获取结果数组
+    function promisify(f, manyArgs = false) {
+      return function (...args) {
+        return new Promise((resolve, reject) => {
+          function callback(err, ...results) { // 给 f 用的自定义回调
+            if (err) {
+              return reject(err);
+            } else {
+              // 如果 manyArgs 被指定值，则 resolve 所有回调结果
+              resolve(manyArgs ? results : results[0]);
+            }
+          }
+
+          args.push(callback);
+
+          f.call(this, ...args);
+        });
+      };
+    };
+
+    // 用法：
+    f = promisify(f, true);
+    f(...).then(arrayOfResults => ..., err => ...)
+    
+ ## Async/await
+ 
+ async 确保了函数的返回值是一个 promise，也会包装非 promise 的值。
+ 
+    async function f() {
+      return Promise.resolve(1);
+      //return 1
+    }
+
+    f().then(alert); // 1
+关键字 await 让 JavaScript 引擎等待直到 promise 完成并返回结果。
+
+      async function test(s) {
+                let res = await new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve(s + 23232)
+
+                }, 3000)
+            })
+
+            console.log('inner', res)
+        }
+
+        test('guan').then((a) => console.log(a, 'outer is behind'))
+3秒后，打印 inner guan23232  和   undefined outer is behind
+和用f().then拿到结果相比更优雅
+可以将await包裹在匿名函数中：
+
+    (async () => {
+      let response = await fetch('/article/promise-chaining/user.json');
+      let user = await response.json();
+      ...
+    })();
+    
+当我们使用 async/await 时，几乎就不会用到 .then 了（用await替换），因为为我们 await 处理了异步等待。并且我们可以用 try..catch 来替代 .catch。这通常更加方便（当然不是绝对的）。
+
+    async function f() {
+
+      try {
+        let response = await fetch('/no-user-here');
+        let user = await response.json();
+      } catch(err) {
+        // 捕获到 fetch 和 response.json 中的错误
+        alert(err);
+      }
+    }
+
+    f();
+    
+当我们需要同时等待多个 promise 时，我们可以用 Promise.all 来包裹他们，然后使用 await：
+
+    // 等待多个 promise 结果
+    let results = await Promise.all([
+      fetch(url1),
+      fetch(url2),
+      ...
+    ]);
+    
+    
+## 事件循环
+
+## 常见练习：
+
+
