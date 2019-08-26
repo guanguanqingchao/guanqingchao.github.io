@@ -309,4 +309,153 @@ Promisify，就是回调函数与 Promise 间的桥梁，将一个不是promise�
 
 ## 常见练习：
 
+1.红灯三秒亮一次，绿灯一秒亮一次，黄灯2秒亮一次；如何让三个灯不断交替重复亮灯？（用 Promse 实现）
+
+promise解决：
+
+    function red(){
+            console.log('red')
+        }
+
+        function green(){
+            console.log('green')
+        }
+
+        function yellow(){
+            console.log('yellow')
+        }
+
+        function delay(ms,cb){
+            return new Promise((resolve,reject)=>{
+                setTimeout(() => {
+                    cb();
+                    resolve()
+                }, ms);
+            })
+        }
+
+        function light(){
+           Promise.resolve().then(()=>{
+               return delay(1000,red)
+           }).then(()=>{
+               return delay(2000,green)
+           }).then(()=>{
+               return delay(3000,yellow)
+           }).then(()=>{
+               light()
+           })
+        }
+
+        light()
+        
+  async解决：
+        
+        function red() {
+            console.log('red')
+        }
+
+        function green() {
+            console.log('green')
+        }
+
+        function yellow() {
+            console.log('yellow')
+        }
+
+        function delay(ms, cb) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    cb();
+                    resolve()
+                }, ms);
+            })
+        }
+
+        async function light() {
+            let redlight = await delay(1000, red);
+            let greenlight = await delay(2000, green);
+            let yellowlight = await delay(3000, yellow);
+            return light();
+        }
+
+        light()
+
+2.链式调用
+
+        class A {
+          constructor() {
+          this.list = Promise.resolve();
+        }
+
+        say(message) {
+          this.list = this.list.then(() => {
+            console.log(message);
+          });
+          return this;
+        }
+
+        delay(duration) {
+          this.list = this.list.then(
+          () =>
+          new Promise(resolve => {
+          setTimeout(() => {
+          resolve();
+          }, duration);
+          })
+          );
+          return this;
+          }
+        }
+
+        const a = new A();
+
+        a.say("1")
+        .delay(1000)
+        .say("2")
+        .delay(4000)
+        .say("fsaffa");
+3.实现 mergePromise 函数，把传进去的函数数组按顺序先后执行，并且把返回的数据先后放到数组 data 中。
+
+        //全局定义一个promise实例p
+        //循环遍历函数数组，每次循环更新p，将要执行的函数item通过p的then方法进行串联，并且将执行结果推入data数组
+        //最后将更新的data返回，这样保证后面p调用then方法，如何后面的函数需要使用data只需要将函数改为带参数的函数。
+
+        //模拟异步
+        const timeout = ms => new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, ms);
+        });
+
+        const ajax1 = () => timeout(2000).then(() => {
+            console.log('1');
+            return 1;
+        });
+
+        const ajax2 = () => timeout(1000).then(() => {
+            console.log('2');
+            return 2;
+        });
+
+        const ajax3 = () => timeout(2000).then(() => {
+            console.log('3');
+            return 3;
+        });
+
+        let p = Promise.resolve()
+
+        function mergePromise(arr) {
+            let dataArr = []
+            arr.forEach(ajax => {
+                p = p.then(ajax).then((data) => {
+                    dataArr.push(data)
+                    return dataArr
+                })
+            });
+
+            return p
+
+        }
+
+        mergePromise([ajax1, ajax2, ajax3]).then(data => console.log('done', data))
 
