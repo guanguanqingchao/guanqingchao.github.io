@@ -13,9 +13,24 @@ https://www.cnblogs.com/peida/archive/2012/10/23/2734829.html
      pwd 
 
 ### mkdir
+
+     新建目录或者文件夹
      mkdir -p  t/t1 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录; 
      mkdir -v t     每次创建新目录都显示信息
+     
+### touch
 
+    新建文件
+    修改文件时间戳
+    
+    	-a   或--time=atime或--time=access或--time=use 　只更改存取时间。
+	-c   或--no-create 　不建立任何文档。
+	-d 　使用指定的日期时间，而非现在的时间。
+	-f 　此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。
+	-m   或--time=mtime或--time=modify 　只更改变动时间。
+	-r 　把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。
+	-t 　使用指定的日期时间，而非现在的时间
+    
 ### rm
 
     -f, --force    忽略不存在的文件，从不给出提示。
@@ -31,6 +46,7 @@ https://www.cnblogs.com/peida/archive/2012/10/23/2734829.html
        --version  输出版本信息并退出、
        
     rmdir 删除空目录
+    
 ### mv
 
     mv [选项] 源文件或目录 目标文件或目录
@@ -51,3 +67,30 @@ https://www.cnblogs.com/peida/archive/2012/10/23/2734829.html
     
     mv * ../   移动当前目录下的文件档上一级目录
     mv test3/*.txt test5  把当前目录的一个子目录里的文件移动到另一个子目录里
+    
+### cat
+    cat主要有三大功能：
+
+	1.一次显示整个文件:cat filename
+
+	2.从键盘创建一个文件:cat > filename 只能创建新文件,不能编辑已有文件.
+
+	3.将几个文件合并为一个文件:cat file1 file2 > file
+	
+	-A, --show-all           等价于 -vET
+	-b, --number-nonblank    对非空输出行编号
+	-e                       等价于 -vE
+	-E, --show-ends          在每行结束处显示 $
+	-n, --number     对输出的所有行编号,由1开始对所有输出的行数编号
+	-s, --squeeze-blank  有连续两行以上的空白行，就代换为一行的空白行 
+	-t                       与 -vT 等
+	-T, --show-tabs          将跳格字符显示为 ^I
+	-u                       (被忽略)
+	-v, --show-nonprinting   使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外
+	
+    cat mytext.txt mytext2.txt 同时显示两个文件内容
+    cat mytext.txt > newfile.txt 如果newfile.txt存在 则覆盖原内容，否则新建
+    cat mytext.txt mytext2.txt > newfile.txt 
+    cat file.txt >> another-file.txt  在another-file.txt后面append
+    
+
