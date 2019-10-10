@@ -9,13 +9,11 @@
     
     
     hash：跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
-    chunkhash：根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值。不同入口及其依赖hash值一样。公用的库hash单独。
-              如果入口main.js中引用了style.css[如果使用MiniCssExtractPlugin提取css，[chunkhash].css，那么二者的包hash一致.如果main文件改变了 ，那么css的hash也会变
+    chunkhash：根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值。不同入口及其依赖hash值一样。公用的库hash单独。如果入口main.js中引用了style.css[如果使用MiniCssExtractPlugin提取css，[chunkhash].css，那么二者的包hash一致.如果main文件改变了 ，那么css的hash也会变
     contenthash：设置为contenthash，保证只要css内容不变，就不会重复构建
     
     runtime:在浏览器运行过程中，webpack 用来连接模块化应用程序所需的所有代码。它包含：在模块交互时，连接模块所需的加载和解析逻辑。
-    manifest:管理模块之间的交互，可以追踪所有模块到输出 bundle 之间的映射
-    当 compiler 开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 "manifest"，当完成打包并发送到浏览器时，runtime 会通过 manifest 来解析和加载模块。
+    manifest:管理模块之间的交互，可以追踪所有模块到输出 bundle 之间的映射，当 compiler 开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 "manifest"，当完成打包并发送到浏览器时，runtime 会通过 manifest 来解析和加载模块。
     
     
   
@@ -28,6 +26,7 @@
 
 结合pdf 和https://juejin.im/user/59dc483e6fb9a0450e7511b4/posts
 
+#### 自己动手写插件和loader
 
 
 #### 利用webpack进行性能优化
