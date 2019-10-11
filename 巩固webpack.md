@@ -7,7 +7,15 @@
     bundle
     chunk
     
-    tree shaking:
+    
+    副作用：一个函数会、或者可能会对函数外部变量产生影响的行为。
+    tree shaking:删除无用代码
+        1.依赖于es6模块:ES6的模块引入是静态分析的，故而可以在编译时正确判断到底加载了什么代码。分析程序流，判断哪些变量未被使用、引用，进而删除此代码。
+        2.在项目 package.json 文件中，添加一个 "sideEffects" 入口。标记无副作用的代码
+        3.引入一个能够删除未引用代码(dead code)的压缩工具（例如 UglifyJSPlugin）。webpack4生产mode默认启用
+        4.无用函数可消除，无用类不可  https://juejin.im/post/5a5652d8f265da3e497ff3de
+    
+    
     
     hash：跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
     chunkhash：根据不同的入口文件(Entry)进行依赖文件解析、构建对应的chunk，生成对应的哈希值。不同入口及其依赖hash值一样。公用的库hash单独。如果入口main.js中引用了style.css[如果使用MiniCssExtractPlugin提取css，[chunkhash].css，那么二者的包hash一致.如果main文件改变了 ，那么css的hash也会变
